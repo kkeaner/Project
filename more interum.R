@@ -20,3 +20,7 @@ nSept29b_go3 <- filter(nSept29b_go2, Source != "8.8.8.8" )
 nSept29b_go3a <- filter(nSept29b_go3, Source != "NA" )
 pore <- glm(Length ~ Protocol + Source.Port + Destination.Port + Window.size.value, data = nSept29b_go3a)
 porer <- glm(Length ~ Source + Source.Port + Destination.Port + Window.size.value, data = nSept29b_go3a)
+sorey <- glm(Length ~ Protocol + Source.Port + Window.size.value, data = nSept30b_go3a)
+# not including the Destination Port - PCA
+sorery <- glm(Length ~ Source + Source.Port + Window.size.value, data = nSept30b_go3a)
+pore <- glm(Length ~ Protocol + Source.Port, data = nSept29b_go3a)
