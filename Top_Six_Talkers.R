@@ -1,3 +1,7 @@
+# top 6 talkers were taken from
+# tally(~Source.1, data = Sept30th, format = "percent") - presented in abstract.....it listed all the MAC addresses
+# of all the devices and the percentage of each collected as traffic by the traffic analyzer....these MAC addresses 
+# were matched up with their associated IP's and then used to reduce the data set - interesting traffic
 Sept30b <- read.csv(file.choose( ))
 library (dplyr)
 alpa_Sept30b <- Sept30b %>% filter(grepl("[a-z]", Source))
@@ -31,4 +35,5 @@ summary(lin_reg_5)
 # this tells us which destinations that the internal devices are speaking to.....many!!!
 # subMat <- subset(Mattrix_2, Protocol %in% c("CLASSIC-STUN", "DNS", "ICMP", "IGMPv2", "IGMPv3", "NTP") )
 # when the above is executed to pick out statistically significant protocols only UDP was returned.....this cannot be used
+# another way of reducing the data set will be explored
 
