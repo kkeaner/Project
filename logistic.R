@@ -112,3 +112,67 @@ confusionMatrix(table(p_class, test [["state"]]))
 #AIC: 221533
 
 #Number of Fisher Scoring iterations: 16
+
+glmnew <- glm(state~ Source.1, family = "binomial", Mattrix_3)
+pred <- predict(glmnew, test, type = "response")
+p_class <- ifelse(pred > .50, "1", "0")
+table (p_class)
+confusionMatrix(table(p_class, test [["state"]]))
+#Confusion Matrix and Statistics
+#
+#       
+#p_class     0     1
+#     0  9679  7260
+#     1  5411 56278
+#                                          
+#               Accuracy : 0.8388          
+#                 95% CI : (0.8363, 0.8414)
+#    No Information Rate : 0.8081          
+#    P-Value [Acc > NIR] : < 2.2e-16       
+#                                          
+#                  Kappa : 0.5036          
+# Mcnemar's Test P-Value : < 2.2e-16       
+#                                          
+#            Sensitivity : 0.6414          
+#           Specificity : 0.8857          
+#         Pos Pred Value : 0.5714          
+#         Neg Pred Value : 0.9123          
+#             Prevalence : 0.1919          
+#         Detection Rate : 0.1231          
+#   Detection Prevalence : 0.2154          
+#      Balanced Accuracy : 0.7636          
+#                                          
+#       'Positive' Class : 0   
+#
+glmnewer <- glm(state~ Destination.1, family = "binomial", Mattrix_3)
+pred <- predict(glmnewer, test, type = "response")
+p_class <- ifelse(pred > .50, "1", "0")
+table (p_class)
+#p_class
+#    0     1 
+# 5593 73035 
+confusionMatrix(table(p_class, test [["state"]]))
+#Confusion Matrix and Statistics
+#
+#p_class     0     1
+#      0  5593     0
+#     1  9497 63538
+#                                          
+#               Accuracy : 0.8792          
+#                 95% CI : (0.8769, 0.8815)
+#    No Information Rate : 0.8081          
+#    P-Value [Acc > NIR] : < 2.2e-16       
+#                                          
+#                  Kappa : 0.4877          
+# Mcnemar's Test P-Value : < 2.2e-16       
+#                                          
+#            Sensitivity : 0.37064         
+#            Specificity : 1.00000         
+#         Pos Pred Value : 1.00000         
+#         Neg Pred Value : 0.86997         
+#             Prevalence : 0.19192         
+#         Detection Rate : 0.07113         
+#   Detection Prevalence : 0.07113         
+#      Balanced Accuracy : 0.68532         
+#                                          
+#      'Positive' Class : 0  
