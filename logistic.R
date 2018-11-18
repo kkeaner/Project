@@ -1,4 +1,17 @@
 # Mattrix_2 is refererred to in the top 6 talkers script
+Sept30b <- read.csv(file.choose( ))
+library (dplyr)
+alpa_Sept30b <- Sept30b %>% filter(grepl("[a-z]", Source))
+num_Sept30b <- Sept30b %>% filter(!grepl("[a-z]", Source))
+Stateless<- subset(num_Sept30b, is.na(Source.Port))
+Stateful<- subset(num_Sept30b, !is.na(Source.Port))
+Stateful$state <- 1
+Stateless$state <- 0
+N_Sept30b <<- rbind(Stateful, Stateless)
+nSept30b_go1 <- filter(N_Sept30b, Source != "::" )
+nSept30b_go2 <- filter(nSept30b_go1, Source != "0.0.0.0" )
+nSept30b_go3 <- filter(nSept30b_go2, Source != "8.8.8.8" )
+Mattrix_2 <- subset(nSept30b_go3, Source %in% c("192.168.1.249", "192.168.1.106", "192.168.1.223", "192.168.1.193", "192.168.1.143" ,"192.168.1.240") )
 rows <- sample(nrow(Mattrix_2))
 Mattrix_2 <- Mattrix_2[rows, ]
 split <- round(nrow(Mattrix_2) * .75)
@@ -33,7 +46,7 @@ table (p_class)
 # p_class
 #    0     1 
 # 5604 73024 
-# ??
+library(caret)
 confusionMatrix(p_class, test [["state"]])
 # Error in confusionMatrix(p_class, test[["state"]]) : 
 # could not find function "confusionMatrix"
@@ -56,7 +69,6 @@ table(p_class, test[["state"]])
 # p_class     0     1
 #       0  5582     0
 #       1  9425 63621
-
 confusionMatrix(table(p_class, test [["state"]]))
 #Confusion Matrix and Statistics
 #

@@ -1,0 +1,48 @@
+Sept30b <- read.csv(file.choose())
+library (dplyr)
+alpa_Sept30b <- Sept30b %>% filter(grepl("[a-z]", Source))
+num_Sept30b <- Sept30b %>% filter(!grepl("[a-z]", Source))
+Stateless<- subset(num_Sept30b, is.na(Source.Port))
+Stateful<- subset(num_Sept30b, !is.na(Source.Port))
+Stateful$state <- 1
+Stateless$state <- 0
+N_Sept30b <<- rbind(Stateful, Stateless)
+nSept30b_go1 <- filter(N_Sept30b, Source != "::" )
+nSept30b_go2 <- filter(nSept30b_go1, Source != "0.0.0.0" )
+nSept30b_go3 <- filter(nSept30b_go2, Source != "8.8.8.8" )
+Mattrix_2 <- subset(nSept30b_go3, Source %in% c("192.168.1.249", "192.168.1.106", "192.168.1.223", "192.168.1.193", "192.168.1.143" ,"192.168.1.240") )
+rows <- sample(nrow(Mattrix_2))
+Mattrix_2 <- Mattrix_2[rows, ]
+split <- round(nrow(Mattrix_2) * .75)
+train <- Mattrix_2[1:split, ]
+test <- Mattrix_2[(split + 1):nrow(Mattrix_2), ]
+glmtest <- glm(state~ Length + Time + Time.to.live, family = "binomial", Mattrix_2)
+p <- predict(glmtest, test, type = "response")
+p_class <- ifelse(p > .50, "1", "0")
+table (p_class)
+table(p_class, test[["state"]])
+Mattrix_3 <- subset(Mattrix_2, select = -c(Source.Port, Destination.Port, Window.size.value))
+rows <- sample(nrow(Mattrix_3))
+Mattrix_3 <- Mattrix_3[rows, ]
+split <- round(nrow(Mattrix_3) * .75)
+train <- Mattrix_3[1:split, ]
+test <- Mattrix_3[(split + 1):nrow(Mattrix_3), ]
+glmtest_b <- glm(state~ Length + Time + Time.to.live, family = "binomial", Mattrix_3)
+pred <- predict(glmtest_b, test, type = "response")
+p_class <- ifelse(pred > .50, "1", "0")
+table (p_class)
+table(p_class, test[["state"]])
+library(caret)
+confusionMatrix(table(p_class, test [["state"]]))
+glmnew <- glm(state~ Source.1, family = "binomial", Mattrix_3)
+pred <- predict(glmnew, test, type = "response")
+p_class <- ifelse(pred > .50, "1", "0")
+table (p_class)
+confusionMatrix(table(p_class, test [["state"]]))
+glmnewer <- glm(state~ Destination.1, family = "binomial", Mattrix_3)
+pred <- predict(glmnewer, test, type = "response")
+p_class <- ifelse(pred > .50, "1", "0")
+table (p_class)
+confusionMatrix(table(p_class, test [["state"]]))
+library(caTools)
+colAUC(pred, test[["state"]], plotROC = TRUE)
