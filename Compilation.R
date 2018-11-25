@@ -37,3 +37,28 @@ tally(~Source.1, data = Sept30b, format = "percent")
 # from here we get the top talkers
 barchart(tally(~Source.1, data = Sept30b, format = "proportion"))
 #graphical representation
+multi <- lm(Length ~ Source + Protocol + Time.to.live, data = Mattrix_5)
+vif(multi)
+hulti <- lm(Length ~ Type + Protocol + Time.to.live, data = Mattrix_5)
+vif(hulti)
+hulti <- lm(Length ~ Type + Protocol + Time.to.live, data = Mattrix_5)
+vif(hulti)
+# linear regressions and analysis
+first <- lm(Length ~ Protocol, data = Mattrix_5)
+summary(first)
+second <- lm(Length ~ Type, data = Mattrix_5)
+summary(second)
+third <- lm(Length ~ Time.to.live = Mattrix_5)
+summary(third)
+anova(first)
+anova(second)
+anova(third)
+# mulitple linear regression based on Multi-collinerity
+first_multi <- lm(Length ~ Protocol + Source + Time.to.live, data = Mattrix_5)
+summary(first_multi)
+kruskal.test(x = Mattrix_5$Length, g = as.factor(Mattrix_5$Source.1))
+aggregate(Length~Source.1, data = Mattrix_5,FUN=mean, na.rm=T))
+aggregate(Length~Destination, data = Mattrix_5,FUN=mean, na.rm=T)
+aggregate(Length~Type, data = Mattrix_5,FUN=mean, na.rm=T)
+boxplot(Mattrix_5$Length~Mattrix_5$Type)
+# chi squared test did not yield usable results
