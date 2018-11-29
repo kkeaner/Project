@@ -18,4 +18,8 @@ step(model.null,
       scope = list(upper=model.full),
               direction="both",
               data=Data.num)
-the_model <- lm(Length ~ Destination.Port + Window.size.value + Time + Source.Port, data = Data.num)
+the_model <- lm(Length ~ Source.Port + Time + Window.size.value + 
+    Destination.Port, data = Data.num)
+# the best model is picked to be all 4 variables having the lowest AIC.  Length is the only numeric variable 
+# common to both Stateful and Stateless Data Frames so is why there is a need to move
+# to logistic regression where binomial regression with categorical variables can be used
